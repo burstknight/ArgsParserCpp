@@ -704,6 +704,9 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
+# Skip config file for the vim plugin `coc.nvim`
+.vim/*
+
 ### VisualStudio Patch ###
 # Additional files built by Visual Studio
 
