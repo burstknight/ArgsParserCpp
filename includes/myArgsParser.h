@@ -2,6 +2,8 @@
 #define MY_ARGS_PARSER_H
 
 #include <string>
+#include <vector>
+#include <memory>
 
 namespace ArgsParserCpp {
 	class myArgsParser{
@@ -121,6 +123,22 @@ namespace ArgsParserCpp {
 				 */
 				std::string sDescription;
 			}; // End of struct PositionArgument_s
+
+			/**
+			 * @brief This field stores the position argument list.
+			 *
+			 * User can add all position arguments into this field. And then this class will store
+			 * the parsed result into this field for each position argument.
+			 */
+			std::vector<std::shared_ptr<PositionArgument_s>> m_vpoPositionArguments;
+
+			/**
+			 * @brief This field stores the option argument list.
+			 * User can add all option arguments into this field. And then this class will store the
+			 * parsed result into this field for each option argument.
+			 *
+			 */
+			std::vector<std::shared_ptr<OptionArgument_s>> m_vpoOptionArguments;
 	}; // End of class myArgsParser
 } // End of namespace ArgsParserCpp
 
