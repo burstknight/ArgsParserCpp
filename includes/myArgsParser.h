@@ -139,6 +139,22 @@ namespace ArgsParserCpp {
 			 *
 			 */
 			std::vector<std::shared_ptr<OptionArgument_s>> m_vpoOptionArguments;
+
+		// public member functions
+		public:
+			/**
+			 * @brief Constructor.
+			 *
+			 * This member function can initialize all resources.
+			 */
+			myArgsParser();
+
+			/**
+			 * @brief Destructor.
+			 *
+			 * This member function can release all resources.
+			 */
+			~myArgsParser();
 	}; // End of class myArgsParser
 } // End of namespace ArgsParserCpp
 
