@@ -7,7 +7,7 @@ namespace ArgsParserCpp {
 	class myArgsParser{
 		protected:
 			/**
-			 * @brief This struct wrap some necessary information for option argument.
+			 * @brief This struct wraps some necessary information for option argument.
 			 *
 			 * This class need this struct to represent option arguments like `-h` or `--help`.
 			 */
@@ -69,7 +69,58 @@ namespace ArgsParserCpp {
 				 * to to more information about this option argument. 
 				 */
 				std::string sDescription;
-			};
+			}; // End of struct OptionArgument_s
+
+			/**
+			 * @brief This struct wraps some important information for position argument.
+			 *
+			 * This class can use this struct to represent the position argument. For example, we can
+			 * give a file path for the command "cat" like "cat file.txt", and then the command "cat"
+			 * can read and show the context of the given file "file.txt". For this example, "file.txt"
+			 * can called the position argument.
+			 */
+			struct PositionArgument_s{
+				/**
+				 * @brief Store the position argument name as keyword.
+				 *
+				 * We need set the value of this member as a keyword in order to get the parsed position
+				 * argument in future.
+				 */
+				std::string sArgName;
+
+				/**
+				 * @brief Represent that this position argument is necessary.
+				 *
+				 * We can set this member to require user to give a value for this position argument.
+				 * If user dosen't give a value for this option argument, we should show error message
+				 * to alert user.
+				 */
+				bool isNecessary;
+
+				/**
+				 * @brief Store the default value for this position argument.
+				 *
+				 * We can set this member to give the default value for this position argument. If
+				 * user dosen't give any value for this position argument, we can use the default
+				 * value as the current value for this position argument.
+				 */
+				std::string sDefaultValue;
+
+				/**
+				 * @brief Store the parsed value.
+				 *
+				 * If user give a value, we can store the parsed value into this member.
+				 */
+				std::string sParsedValue;
+
+				/**
+				 * @brief Store the description for this position argument.
+				 *
+				 * We can set this member to show the details for this position argument if user wants
+				 * to to more information about this position argument. 
+				 */
+				std::string sDescription;
+			}; // End of struct PositionArgument_s
 	}; // End of class myArgsParser
 } // End of namespace ArgsParserCpp
 
