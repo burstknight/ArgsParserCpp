@@ -707,6 +707,10 @@ FodyWeavers.xsd
 # Skip config file for the vim plugin `coc.nvim`
 .vim/*
 
+# Skip config files for `doxygen`
+doc/Doxyfile
+doc/html*
+
 ### VisualStudio Patch ###
 # Additional files built by Visual Studio
 
