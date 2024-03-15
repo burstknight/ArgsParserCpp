@@ -4,10 +4,16 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <set>
 
 namespace ArgsParserCpp {
 	class myArgsParser{
+#ifdef Unit_Test
+		public:
+#else
 		protected:
+#endif // End of Unit_test
+
 			/**
 			 * @brief This struct wraps some necessary information for option argument.
 			 *
@@ -140,6 +146,13 @@ namespace ArgsParserCpp {
 			 */
 			std::vector<std::shared_ptr<OptionArgument_s>> m_vpoOptionArguments;
 
+			/**
+			 * @brief This field can store argument names.
+			 *
+			 * We need use this field to avoid user give the exited argument names.
+			 */
+			std::set<std::string> m_oArgNameSet;
+
 		// public member functions
 		public:
 			/**
@@ -155,6 +168,25 @@ namespace ArgsParserCpp {
 			 * This member function can release all resources.
 			 */
 			~myArgsParser();
+
+			/**
+			 * @brief Add a position argument.
+			 *
+			 * You can use this member function to add a position argument for your program. And
+			 * then this class will parse the command line arguments for the added position argument.
+			 *
+			 * @param sArgName: Give the argument name for this added position argument. You will use the given argument name to get the parsed value for this added position argument. Note, any position argument and option argument must has the unique argument name.
+			 * @param sDescription: Give the information for this added position argument.
+			 * @param isNecessary: This added position argument is regarded as the necessary position argument for your program if you set this flag to true. Otherwise, this class requires user give a value for this position argument. The default value is false.
+			 * @param sDefaultValue: You can give a default value for this added position argument. The default value is an empty string.
+			 *
+			 * @retval 0: Succeed to add the given position argument. 
+			 * @retval 1: Fail to add the given position argument becasue the argument name has been added.
+			 * @retval -1: Fail to add the give position argument becasue the give argument name is an empty string.
+			 *
+			 * @see PositionArgument_s
+			 */
+			int addPositionArgument(const std::string& sArgName, const std::string& sDescription, bool isNecessary = false, const std::string& sDefaultValue = "");
 	}; // End of class myArgsParser
 } // End of namespace ArgsParserCpp
 
