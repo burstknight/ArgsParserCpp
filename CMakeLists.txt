@@ -6,6 +6,14 @@ cmake_minimum_required(VERSION 3.5)
 project(ArgsParserCpp)
 
 ###########################################################
+# Require to use C++14 to build source code.
+###########################################################
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+###########################################################
 # Set the version for this project.
 ###########################################################
 set(ArgsParserCpp_Version_Major 0)
@@ -41,3 +49,29 @@ endif(${Enable_Generate_Document})
 
 aux_source_directory(./src SOURCES)
 add_library(ArgsParserCpp ${SOURCES})
+
+###########################################################
+# Add the build config to enable or disable in order to 
+# test this project.
+###########################################################
+option(Do_Unit_Test "Do you want to do unit test?" ON)
+if(${Do_Unit_Test})
+	enable_testing()
+
+	# Add macro for unit test.
+	add_definitions(-DUnit_Test)
+
+	# Clone googletest for unit test
+	include(FetchContent)
+	# For windows, this setting can prevent overriding this project's compiler/linker settings.
+	set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+	FetchContent_Declare(
+		googletest
+		GIT_REPOSITORY https://github.com/google/googletest.git
+		GIT_TAG v1.14.0
+		)
+	FetchContent_MakeAvailable(googletest)
+
+	add_subdirectory(./tests)
+endif(${Do_Unit_Test})
+
