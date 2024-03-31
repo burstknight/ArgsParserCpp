@@ -149,9 +149,23 @@ namespace ArgsParserCpp {
 			/**
 			 * @brief This field can store argument names.
 			 *
-			 * We need use this field to avoid user give the exited argument names.
+			 * We need use this field to avoid user giving the existed argument names.
 			 */
 			std::set<std::string> m_oArgNameSet;
+
+			/**
+			 * @brief This field can store all added short arguments.
+			 *
+			 * We need use this field to avoid user giving the existed short arguments.
+			 */
+			std::set<char> m_oShortArgumentSet;
+
+			/**
+			 * @brief This field can store all added long arguments.
+			 *
+			 * We need use this field to avoid user giving the existed long arguments.
+			 */
+			std::set<std::string> m_oLongArguemntSet;
 
 		// public member functions
 		public:
@@ -187,6 +201,24 @@ namespace ArgsParserCpp {
 			 * @see PositionArgument_s
 			 */
 			int addPositionArgument(const std::string& sArgName, const std::string& sDescription, bool isNecessary = false, const std::string& sDefaultValue = "");
+
+			/**
+			 * @brief Add an option argument.
+			 *
+			 * You can use this member function to add an option argument for your command line
+			 * program. And then this class will parse the command line arguments for the added
+			 * option argument.
+			 *
+			 * @param sArgName: Give the argument name for this added option argument. You will use the given argument name to get the parsed value for this added option argument. Note, any option argument and option argument must has the unique argument name.
+			 * @param sDescription: Give the information for this added option argument.
+			 * @param sLongArg: Give an unique long argument name for this added option argument. This member function will automatically add "--" for the given long argument. For example, you just give "argument" if you hope to add "--argument" as the long argument. You can give an empty for this long argument if you don't set the long argument, but you have to set the short argument for this option argument.
+			 * @param sShortArg: Give an unique short argument name like "a". This member function will add "-" for the given short argument. For example, you just give "a" if you want to add "-a" as the short argument. You can give null charactor "'\0'" for this short argument if you don't set the short argument, but you must set the long argument for this option argument.
+			 * @param isNeedValue: If this option argument need receive a value, you need set this flag to true. Otherwise, you should give false for this option argument.
+			 * @param sDefaultValue: You can give a default value for this added option argument. The default value is an empty string.
+			 *
+			 * @return 
+			 */
+			void addOptionArgument(const std::string& sArgName, const std::string& sDescription, const std::string& sLongArg, char cShortArg, bool isNeedValue = false, const std::string& sDefaultValue = "");
 	}; // End of class myArgsParser
 } // End of namespace ArgsParserCpp
 
