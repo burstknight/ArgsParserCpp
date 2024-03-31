@@ -1,4 +1,8 @@
+#include "gtest/gtest.h"
+#include <cstdio>
 #include <gtest/gtest.h>
+#include <memory>
+#include <stdexcept>
 #include "../includes/myArgsParser.h"
 
 using namespace std;
@@ -50,6 +54,20 @@ TEST(myArgsParserTest, AddPositionArgument){
 	delete poPaser;
 	poPaser = nullptr;
 } // End of myArgsParserTest::AddPositionArgument
+
+TEST(myArgsParserTest, AddOptionArgumentFailed){
+	shared_ptr<myArgsParser> poPaser(new myArgsParser());
+
+	EXPECT_THROW(poPaser->addOptionArgument("", "", "", '\0'), invalid_argument);
+
+	poPaser->m_oLongArguemntSet.insert("existed_arg");
+	EXPECT_THROW(poPaser->addOptionArgument("existed", "", "existed_arg", '\0'), invalid_argument);
+	poPaser->m_oLongArguemntSet.erase(poPaser->m_oLongArguemntSet.find("existed_arg"));
+
+	poPaser->m_oShortArgumentSet.insert('a');
+	EXPECT_THROW(poPaser->addOptionArgument("existed", "", "", 'a'), invalid_argument);
+	poPaser->m_oShortArgumentSet.erase(poPaser->m_oShortArgumentSet.find('a'));
+} // End of myArgsParserTest::AddOptionArgumentFailed
 
 int main(int argc, char** argv){
 	::testing::InitGoogleTest(&argc, argv);
