@@ -4,6 +4,10 @@
 #include <memory>
 #include <stdexcept>
 
+#ifdef _MSC_VER
+	#define __PRETTY_FUNCTION__ 	__FUNCSIG__
+#endif // End of _MSC_VER
+
 #define BUFFER_SIZE 4096
 
 using namespace std;
