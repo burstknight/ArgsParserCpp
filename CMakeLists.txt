@@ -49,6 +49,10 @@ endif(${Enable_Generate_Document})
 
 aux_source_directory(./src SOURCES)
 add_library(ArgsParserCpp ${SOURCES})
+target_include_directories(ArgsParserCpp
+	PUBLIC
+		$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/includes>
+	)
 
 ###########################################################
 # Add the build config to enable or disable in order to 

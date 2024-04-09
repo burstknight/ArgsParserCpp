@@ -3,7 +3,7 @@
 #include <gtest/gtest.h>
 #include <memory>
 #include <stdexcept>
-#include "../includes/myArgsParser.h"
+#include "ArgsParserCpp/myArgsParser.h"
 
 using namespace std;
 using namespace ArgsParserCpp;
