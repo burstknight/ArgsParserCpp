@@ -216,7 +216,7 @@ namespace ArgsParserCpp {
 			 * @param isNeedValue: If this option argument need receive a value, you need set this flag to true. Otherwise, you should give false for this option argument.
 			 * @param sDefaultValue: You can give a default value for this added option argument. The default value is an empty string.
 			 *
-			 * @return 
+			 * @throw std::invalid_argument: This member function will issue this type exception if this member function gets any invalid parameters.
 			 */
 			void addOptionArgument(const std::string& sArgName, const std::string& sDescription, const std::string& sLongArg, char cShortArg, bool isNeedValue = false, const std::string& sDefaultValue = "");
 	}; // End of class myArgsParser
