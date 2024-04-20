@@ -69,6 +69,70 @@ TEST(myArgsParserTest, AddOptionArgumentFailed){
 	poPaser->m_oShortArgumentSet.erase(poPaser->m_oShortArgumentSet.find('a'));
 } // End of myArgsParserTest::AddOptionArgumentFailed
 
+TEST(myArgsParserTest, AddOptionArgumentSucceed){
+	shared_ptr<myArgsParser> poPaser(new myArgsParser());
+
+	EXPECT_NO_THROW(poPaser->addOptionArgument("option1", "The firt option argugment.", "option1", '\0'));
+	EXPECT_EQ(poPaser->m_oShortArgumentSet.empty(), true);
+	EXPECT_EQ(poPaser->m_oArgNameSet.count("option1"), 1);
+	EXPECT_EQ(poPaser->m_oLongArguemntSet.size(), 1);
+	EXPECT_EQ(poPaser->m_oLongArguemntSet.count("option1"), 1);
+	EXPECT_EQ(poPaser->m_vpoOptionArguments.size(), 1);
+	EXPECT_EQ(poPaser->m_vpoOptionArguments[0]->sArgName, "option1");
+	EXPECT_EQ(poPaser->m_vpoOptionArguments[0]->sLongArg, "--option1");
+	EXPECT_EQ(poPaser->m_vpoOptionArguments[0]->sShortArg.empty(), true);
+	EXPECT_EQ(poPaser->m_vpoOptionArguments[0]->sDescription, "The firt option argugment.");
+	EXPECT_EQ(poPaser->m_vpoOptionArguments[0]->isNeedValue, false);
+	EXPECT_EQ(poPaser->m_vpoOptionArguments[0]->sDefaultValue.empty(), true);
+	EXPECT_EQ(poPaser->m_vpoOptionArguments[0]->sParsedValue.empty(), true);
+
+	EXPECT_NO_THROW(poPaser->addOptionArgument("option2", "The second option argugment.", "", 'a', true, "123"));
+	EXPECT_EQ(poPaser->m_oArgNameSet.size(), 2);
+	EXPECT_EQ(poPaser->m_oArgNameSet.count("option2"), 1);
+	EXPECT_EQ(poPaser->m_oShortArgumentSet.size(), 1);
+	EXPECT_EQ(poPaser->m_oShortArgumentSet.count('a'), 1);
+	EXPECT_EQ(poPaser->m_oLongArguemntSet.size(), 1);
+	EXPECT_EQ(poPaser->m_vpoOptionArguments.size(), 2);
+	EXPECT_EQ(poPaser->m_vpoOptionArguments[1]->sArgName, "option2");
+	EXPECT_EQ(poPaser->m_vpoOptionArguments[1]->sLongArg.empty(), true);
+	EXPECT_EQ(poPaser->m_vpoOptionArguments[1]->sShortArg, "a");
+	EXPECT_EQ(poPaser->m_vpoOptionArguments[1]->sDescription, "The second option argugment.");
+	EXPECT_EQ(poPaser->m_vpoOptionArguments[1]->isNeedValue, true);
+	EXPECT_EQ(poPaser->m_vpoOptionArguments[1]->sDefaultValue, "123");
+	EXPECT_EQ(poPaser->m_vpoOptionArguments[1]->sParsedValue, "123");
+
+	EXPECT_NO_THROW(poPaser->addOptionArgument("option3", "The third option argugment.", "third", 'c', false));
+	EXPECT_EQ(poPaser->m_oArgNameSet.size(), 3);
+	EXPECT_EQ(poPaser->m_oArgNameSet.count("option3"), 1);
+	EXPECT_EQ(poPaser->m_oShortArgumentSet.size(), 2);
+	EXPECT_EQ(poPaser->m_oShortArgumentSet.count('c'), 1);
+	EXPECT_EQ(poPaser->m_oLongArguemntSet.size(), 2);
+	EXPECT_EQ(poPaser->m_oLongArguemntSet.count("third"), 1);
+	EXPECT_EQ(poPaser->m_vpoOptionArguments.size(), 3);
+	EXPECT_EQ(poPaser->m_vpoOptionArguments[2]->sArgName, "option3");
+	EXPECT_EQ(poPaser->m_vpoOptionArguments[2]->sLongArg, "--third");
+	EXPECT_EQ(poPaser->m_vpoOptionArguments[2]->sShortArg, "c");
+	EXPECT_EQ(poPaser->m_vpoOptionArguments[2]->sDescription, "The third option argugment.");
+	EXPECT_EQ(poPaser->m_vpoOptionArguments[2]->isNeedValue, false);
+	EXPECT_EQ(poPaser->m_vpoOptionArguments[2]->sDefaultValue, "");
+	EXPECT_EQ(poPaser->m_vpoOptionArguments[2]->sParsedValue, "");
+
+	EXPECT_NO_THROW(poPaser->addOptionArgument("option4", "The fourth option argugment.", "fourth", 0));
+	EXPECT_EQ(poPaser->m_oArgNameSet.size(), 4);
+	EXPECT_EQ(poPaser->m_oArgNameSet.count("option4"), 1);
+	EXPECT_EQ(poPaser->m_oShortArgumentSet.size(), 2);
+	EXPECT_EQ(poPaser->m_oLongArguemntSet.size(), 3);
+	EXPECT_EQ(poPaser->m_oLongArguemntSet.count("fourth"), 1);
+	EXPECT_EQ(poPaser->m_vpoOptionArguments.size(), 4);
+	EXPECT_EQ(poPaser->m_vpoOptionArguments[3]->sArgName, "option4");
+	EXPECT_EQ(poPaser->m_vpoOptionArguments[3]->sLongArg, "--fourth");
+	EXPECT_EQ(poPaser->m_vpoOptionArguments[3]->sShortArg.empty(), true);
+	EXPECT_EQ(poPaser->m_vpoOptionArguments[3]->sDescription, "The fourth option argugment.");
+	EXPECT_EQ(poPaser->m_vpoOptionArguments[3]->isNeedValue, false);
+	EXPECT_EQ(poPaser->m_vpoOptionArguments[3]->sDefaultValue, "");
+	EXPECT_EQ(poPaser->m_vpoOptionArguments[3]->sParsedValue, "");
+} // End of myArgsParserTest::AddOptionArgumentSucceed
+
 int main(int argc, char** argv){
 	::testing::InitGoogleTest(&argc, argv);
 
