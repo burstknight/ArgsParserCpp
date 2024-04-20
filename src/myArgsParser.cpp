@@ -78,16 +78,28 @@ void myArgsParser::addOptionArgument(const std::string& sArgName, const std::str
 		} // End of if-condition
 	} // End of if-condition
 
-	this->m_oArgNameSet.insert(sArgName);
 	shared_ptr<OptionArgument_s> poOptionArgument = make_shared<OptionArgument_s>();
 	poOptionArgument->sArgName = sArgName;
 	poOptionArgument->isNeedValue = isNeedValue;
 	poOptionArgument->sDefaultValue = sDefaultValue;
 	poOptionArgument->sParsedValue = sDefaultValue;
 	poOptionArgument->sDescription = sDescription;
-	poOptionArgument->sLongArg = string("--") + sLongArg;
-	snprintf(acBuffer, BUFFER_SIZE, "-%c", cShortArg);
-	poOptionArgument->sShortArg = acBuffer;
+
+	if (0 != isalpha(cShortArg)) {
+		snprintf(acBuffer, BUFFER_SIZE, "%c", cShortArg);
+		poOptionArgument->sShortArg = acBuffer;
+		this->m_oShortArgumentSet.insert(cShortArg);
+	} else {
+		poOptionArgument->sShortArg = "";
+	} // End of if-condition
+
+	this->m_oArgNameSet.insert(sArgName);
+	if (sLongArg.size() > 0) {
+		this->m_oLongArguemntSet.insert(sLongArg);
+		poOptionArgument->sLongArg = string("--") + sLongArg;
+	} else {
+		poOptionArgument->sLongArg = "";
+	} // End of if-condition
 
 	this->m_vpoOptionArguments.push_back(poOptionArgument);
 } // End of myArgsParser::addOptionArgument
