@@ -67,6 +67,8 @@ TEST(myArgsParserTest, AddOptionArgumentFailed){
 	poPaser->m_oShortArgumentSet.insert('a');
 	EXPECT_THROW(poPaser->addOptionArgument("existed", "", "", 'a'), invalid_argument);
 	poPaser->m_oShortArgumentSet.erase(poPaser->m_oShortArgumentSet.find('a'));
+
+	EXPECT_THROW(poPaser->addOptionArgument("invalid_short_arg", "", "", 27), invalid_argument);
 } // End of myArgsParserTest::AddOptionArgumentFailed
 
 TEST(myArgsParserTest, AddOptionArgumentSucceed){
