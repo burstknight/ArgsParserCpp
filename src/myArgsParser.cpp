@@ -71,6 +71,11 @@ void myArgsParser::addOptionArgument(const std::string& sArgName, const std::str
 		} // End of if-condition
 	} // End of if-condition
 
+	if (!('\0' == cShortArg || 0 != isalpha(cShortArg))) {
+		snprintf(acBuffer, BUFFER_SIZE, "%s: The short argument must get alphabet!\n", __PRETTY_FUNCTION__);
+		throw invalid_argument(acBuffer);
+	} // End of if-condition
+
 	if (0 != isalpha(cShortArg)) {
 		if (0 != this->m_oShortArgumentSet.count(cShortArg)) {
 			snprintf(acBuffer, BUFFER_SIZE, "%s: The short argument `-%c` for this option argument `%s` has been added!\n", __PRETTY_FUNCTION__, cShortArg, sArgName.c_str());
