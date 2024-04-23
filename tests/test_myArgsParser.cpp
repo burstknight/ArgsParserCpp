@@ -11,12 +11,12 @@ using namespace ArgsParserCpp;
 TEST(myArgsParserTest, AddPositionArgument){
 	myArgsParser* poPaser = new myArgsParser();
 
-	EXPECT_EQ(poPaser->addPositionArgument("", ""), -1);
+	EXPECT_THROW(poPaser->addPositionArgument("", ""), invalid_argument);
 	EXPECT_EQ(poPaser->m_vpoPositionArguments.empty(), true);
 	EXPECT_EQ(poPaser->m_vpoOptionArguments.empty(), true);
 	EXPECT_EQ(poPaser->m_oArgNameSet.empty(), true);
 
-	EXPECT_EQ(poPaser->addPositionArgument("arg01", "The first position argument."), 0);
+	EXPECT_NO_THROW(poPaser->addPositionArgument("arg01", "The first position argument."));
 	EXPECT_EQ(poPaser->m_vpoOptionArguments.empty(), true);
 	EXPECT_EQ(poPaser->m_oArgNameSet.count("arg01"), 1);
 	EXPECT_EQ(poPaser->m_vpoPositionArguments.size(), 1);
@@ -26,12 +26,12 @@ TEST(myArgsParserTest, AddPositionArgument){
 	EXPECT_EQ(poPaser->m_vpoPositionArguments[0]->sDefaultValue.empty(), true);
 	EXPECT_EQ(poPaser->m_vpoPositionArguments[0]->sParsedValue.empty(), true);
 
-	EXPECT_EQ(poPaser->addPositionArgument("arg01", "The first position argument."), 1);
+	EXPECT_THROW(poPaser->addPositionArgument("arg01", "The first position argument."), invalid_argument);
 	EXPECT_EQ(poPaser->m_oArgNameSet.count("arg01"), 1);
 	EXPECT_EQ(poPaser->m_vpoOptionArguments.empty(), true);
 	EXPECT_EQ(poPaser->m_vpoPositionArguments.size(), 1);
 
-	EXPECT_EQ(poPaser->addPositionArgument("arg02", "The second position argument.", true, "123"), 0);
+	EXPECT_NO_THROW(poPaser->addPositionArgument("arg02", "The second position argument.", true, "123"));
 	EXPECT_EQ(poPaser->m_vpoOptionArguments.empty(), true);
 	EXPECT_EQ(poPaser->m_oArgNameSet.count("arg01"), 1);
 	EXPECT_EQ(poPaser->m_vpoPositionArguments.size(), 2);
@@ -41,7 +41,7 @@ TEST(myArgsParserTest, AddPositionArgument){
 	EXPECT_EQ(poPaser->m_vpoPositionArguments[1]->sDefaultValue, "123");
 	EXPECT_EQ(poPaser->m_vpoPositionArguments[1]->sParsedValue, "123");
 
-	EXPECT_EQ(poPaser->addPositionArgument("arg_03", "The third position argument.", false, "test.txt"), 0);
+	EXPECT_NO_THROW(poPaser->addPositionArgument("arg_03", "The third position argument.", false, "test.txt"));
 	EXPECT_EQ(poPaser->m_vpoOptionArguments.empty(), true);
 	EXPECT_EQ(poPaser->m_oArgNameSet.count("arg_03"), 1);
 	EXPECT_EQ(poPaser->m_vpoPositionArguments.size(), 3);
