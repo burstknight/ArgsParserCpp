@@ -194,13 +194,11 @@ namespace ArgsParserCpp {
 			 * @param isNecessary: This added position argument is regarded as the necessary position argument for your program if you set this flag to true. Otherwise, this class requires user give a value for this position argument. The default value is false.
 			 * @param sDefaultValue: You can give a default value for this added position argument. The default value is an empty string.
 			 *
-			 * @retval 0: Succeed to add the given position argument. 
-			 * @retval 1: Fail to add the given position argument becasue the argument name has been added.
-			 * @retval -1: Fail to add the give position argument becasue the give argument name is an empty string.
+			 * @throw std::invalid_argument: This member function will issue this type exception if this member function gets any invalid parameter.
 			 *
 			 * @see PositionArgument_s
 			 */
-			int addPositionArgument(const std::string& sArgName, const std::string& sDescription, bool isNecessary = false, const std::string& sDefaultValue = "");
+			void addPositionArgument(const std::string& sArgName, const std::string& sDescription, bool isNecessary = false, const std::string& sDefaultValue = "");
 
 			/**
 			 * @brief Add an option argument.

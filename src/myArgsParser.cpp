@@ -28,14 +28,17 @@ myArgsParser::~myArgsParser(){
 	this->m_oArgNameSet.clear();
 } // End of destructor
 
-int myArgsParser::addPositionArgument(const std::string& sArgName, const std::string& sDescription, bool isNecessary, const std::string& sDefaultValue){
+void myArgsParser::addPositionArgument(const std::string& sArgName, const std::string& sDescription, bool isNecessary, const std::string& sDefaultValue){
+	char acBuffer[BUFFER_SIZE];
 	if (true == sArgName.empty()) {
-		return -1;
+		snprintf(acBuffer, BUFFER_SIZE, "%s: The parameter `sArgName` cannot be an empty string!", __PRETTY_FUNCTION__);
+		throw invalid_argument(acBuffer);
 	} // End of if-condition
 
 	auto poIter = this->m_oArgNameSet.find(sArgName);
 	if (poIter != this->m_oArgNameSet.end()) {
-		return 1;
+		snprintf(acBuffer, BUFFER_SIZE, "%s: The value `%s` of the parameter `sArgName` has been added!", __PRETTY_FUNCTION__, sArgName.c_str());
+		throw invalid_argument(acBuffer);
 	} // End of if-condition
 
 	this->m_oArgNameSet.insert(sArgName);
@@ -47,8 +50,6 @@ int myArgsParser::addPositionArgument(const std::string& sArgName, const std::st
 	poPositionArgument->isNecessary = isNecessary;
 	poPositionArgument->sParsedValue = sDefaultValue;
 	this->m_vpoPositionArguments.push_back(poPositionArgument);
-
-	return 0;
 } // End of myArgsParser::addPositionArgument
 
 void myArgsParser::addOptionArgument(const std::string& sArgName, const std::string& sDescription, const std::string& sLongArg, char cShortArg, bool isNeedValue, const std::string& sDefaultValue){
