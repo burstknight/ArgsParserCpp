@@ -60,6 +60,12 @@ void myArgsParser::addOptionArgument(const std::string& sArgName, const std::str
 		throw invalid_argument(acBuffer);
 	} // End of if-condition
 
+	auto poIter = this->m_oArgNameSet.find(sArgName);
+	if (poIter != this->m_oArgNameSet.end()) {
+		snprintf(acBuffer, BUFFER_SIZE, "%s: The value `%s` of the parameter `sArgName` has been added!", __PRETTY_FUNCTION__, sArgName.c_str());
+		throw invalid_argument(acBuffer);
+	} // End of if-condition
+
 	if (true == sLongArg.empty() && 0 == isalpha(cShortArg)) {
 		snprintf(acBuffer, BUFFER_SIZE, "%s: The parameters `sLongArg` and `cShortArg` are set invalid values meanwhile!", __PRETTY_FUNCTION__);
 		throw invalid_argument(acBuffer);

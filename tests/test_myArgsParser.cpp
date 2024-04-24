@@ -60,6 +60,10 @@ TEST(myArgsParserTest, AddOptionArgumentFailed){
 
 	EXPECT_THROW(poPaser->addOptionArgument("", "", "", '\0'), invalid_argument);
 
+	poPaser->m_oArgNameSet.insert("existed_argname");
+	EXPECT_THROW(poPaser->addOptionArgument("existed_argname", "existed arg name", "test", 't'), invalid_argument);
+	poPaser->m_oArgNameSet.erase(poPaser->m_oArgNameSet.find("existed_argname"));
+
 	poPaser->m_oLongArguemntSet.insert("existed_arg");
 	EXPECT_THROW(poPaser->addOptionArgument("existed", "", "existed_arg", '\0'), invalid_argument);
 	poPaser->m_oLongArguemntSet.erase(poPaser->m_oLongArguemntSet.find("existed_arg"));
