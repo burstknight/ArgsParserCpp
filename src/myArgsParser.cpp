@@ -1,9 +1,11 @@
 #include "ArgsParserCpp/myArgsParser.h"
 #include <cctype>
 #include <cstdio>
+#include <list>
 #include <memory>
 #include <stdexcept>
 #include <string>
+#include <utility>
 
 #ifdef _MSC_VER
 	#define __PRETTY_FUNCTION__ 	__FUNCSIG__
@@ -115,4 +117,80 @@ void myArgsParser::addOptionArgument(const std::string& sArgName, const std::str
 
 	this->m_vpoOptionArguments.push_back(poOptionArgument);
 } // End of myArgsParser::addOptionArgument
+
+void myArgsParser::parseArgs(int argc, char** argv){
+	this->m_oParsedArgs.clear();
+
+	list<int> oOptionArgsIndexList;
+	for (int i = 0; i < this->m_vpoOptionArguments.size(); i++) {
+		oOptionArgsIndexList.push_back(i);
+		this->m_oParsedArgs.insert(pair<string, string>(this->m_vpoOptionArguments[i]->sArgName, this->m_vpoOptionArguments[i]->sParsedValue));
+	} // End of for-loop
+
+	list<int> oPosistionArgsIndexList;
+	for (int i = 0; i < this->m_vpoPositionArguments.size(); i++) {
+		oPosistionArgsIndexList.push_back(i);
+		this->m_oParsedArgs.insert(pair<string, string>(this->m_vpoPositionArguments[i]->sArgName, this->m_vpoPositionArguments[i]->sParsedValue));
+	} // End of for-loop
+
+	enum ArgType_e{
+		kPositionArg,
+		kLongOptionArg,
+		kShortOptionArg,
+	};
+
+	int i = 1;
+	while (true) {
+		if (i >= argc) {
+			break;
+		} // End of if-condition
+
+		ArgType_e kArgType = ArgType_e::kPositionArg;
+		int iCountOfHyphenSymbol = 0;
+		for (int j = 0; j < 2; j++) {
+			if ('-' == argv[i][j]) {
+				iCountOfHyphenSymbol++;
+			} // End of if-condition
+		} // End of for-loop
+
+		switch (iCountOfHyphenSymbol) {
+			case 1:
+				kArgType = ArgType_e::kShortOptionArg;
+				break;
+			case 2:
+				kArgType = ArgType_e::kLongOptionArg;
+				break;
+			default:
+				break;
+		} // End of switch
+
+		switch (kArgType) {
+			case ArgType_e::kPositionArg:
+				{
+					int index = oPosistionArgsIndexList.front();
+					string sArgName = this->m_vpoPositionArguments[index]->sArgName;
+					auto poIter = this->m_oParsedArgs.find(sArgName);
+					if (poIter != this->m_oParsedArgs.end()) {
+						poIter->second = argv[i];
+					} // End of if-condition
+
+					oPosistionArgsIndexList.pop_front();
+					break;
+				}
+			default:
+				break;
+		} // End of switch
+
+		i++;
+	} // End of while-loop
+
+	for (auto poIter = oPosistionArgsIndexList.begin(); poIter != oPosistionArgsIndexList.end(); poIter++) {
+		int index = *poIter;
+		if (true == this->m_vpoPositionArguments[index]->isNecessary) {
+			char acBuffer[BUFFER_SIZE];
+			snprintf(acBuffer, BUFFER_SIZE, "Error: You must give a value for the position argument `%s!`", this->m_vpoPositionArguments[index]->sArgName.c_str());
+			throw runtime_error(acBuffer);
+		} // End of if-condition
+	} // End of for-loop
+} // End of myArgsParser::parseArgs
 

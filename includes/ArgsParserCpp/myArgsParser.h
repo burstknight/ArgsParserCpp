@@ -1,6 +1,7 @@
 #ifndef MY_ARGS_PARSER_H
 #define MY_ARGS_PARSER_H
 
+#include <map>
 #include <string>
 #include <vector>
 #include <memory>
@@ -167,6 +168,13 @@ namespace ArgsParserCpp {
 			 */
 			std::set<std::string> m_oLongArguemntSet;
 
+			/**
+			 * @brief This field will store the parsed arguments.
+			 *
+			 * This class will store all parsed arguments into this field.
+			 */
+			std::map<std::string, std::string> m_oParsedArgs;
+
 		// public member functions
 		public:
 			/**
@@ -217,6 +225,17 @@ namespace ArgsParserCpp {
 			 * @throw std::invalid_argument: This member function will issue this type exception if this member function gets any invalid parameters.
 			 */
 			void addOptionArgument(const std::string& sArgName, const std::string& sDescription, const std::string& sLongArg, char cShortArg, bool isNeedValue = false, const std::string& sDefaultValue = "");
+
+			/**
+			 * @brief Parse the command line arguments.
+			 *
+			 * You can use this member function to parse the command line arguments. This member
+			 * function will store the parsed result into the field myArgsParser::m_oParsedArgs.
+			 *
+			 * @param argc: Give the number of the command line arguments.
+			 * @param argv: Give the array of the command line arguments.
+			 */
+			void parseArgs(int argc, char** argv);
 	}; // End of class myArgsParser
 } // End of namespace ArgsParserCpp
 
