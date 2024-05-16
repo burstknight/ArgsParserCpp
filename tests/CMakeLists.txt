@@ -1,8 +1,11 @@
 enable_testing()
 
-add_executable(test_myArgsParser ./test_myArgsParser.cpp)
+add_executable(
+	test_myArgsParser_addArguments
+	./test_myArgsParser_addArguments.cpp
+	)
 target_link_libraries(
-	test_myArgsParser
+	test_myArgsParser_addArguments
 	ArgsParserCpp
 	gtest
 	)
