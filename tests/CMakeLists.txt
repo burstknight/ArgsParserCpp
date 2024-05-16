@@ -10,4 +10,6 @@ target_link_libraries(
 	gtest
 	)
 
-add_test(test_myArgsParser test_myArgsParser)
+add_test(
+	test_myArgsParser_addArguments test_myArgsParser_addArguments
+	)
