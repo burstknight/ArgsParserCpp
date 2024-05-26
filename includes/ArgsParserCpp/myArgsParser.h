@@ -1,5 +1,5 @@
-#ifndef MY_ARGS_PARSER_H
-#define MY_ARGS_PARSER_H
+#ifndef ARGSPARSERCPP_MYARGSPARSER_H
+#define ARGSPARSERCPP_MYARGSPARSER_H
 
 #include <map>
 #include <string>
