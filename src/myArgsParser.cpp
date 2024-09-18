@@ -8,7 +8,7 @@
 #include <utility>
 
 #ifdef _MSC_VER
-	#define __PRETTY_FUNCTION__ 	__FUNCSIG__
+#define __PRETTY_FUNCTION__ __FUNCSIG__
 #endif // End of _MSC_VER
 
 #define BUFFER_SIZE 4096
@@ -16,7 +16,7 @@
 using namespace std;
 using namespace ArgsParserCpp;
 
-myArgsParser::myArgsParser(){
+myArgsParser::myArgsParser() {
 	this->m_vpoOptionArguments.clear();
 	this->m_vpoPositionArguments.clear();
 	this->m_oArgNameSet.clear();
@@ -24,13 +24,13 @@ myArgsParser::myArgsParser(){
 	this->m_oLongArguemntSet.clear();
 } // End of constructor
 
-myArgsParser::~myArgsParser(){
+myArgsParser::~myArgsParser() {
 	this->m_vpoOptionArguments.clear();
 	this->m_vpoPositionArguments.clear();
 	this->m_oArgNameSet.clear();
 } // End of destructor
 
-void myArgsParser::addPositionArgument(const std::string& sArgName, const std::string& sDescription, bool isNecessary, const std::string& sDefaultValue){
+void myArgsParser::addPositionArgument(const std::string& sArgName, const std::string& sDescription, bool isNecessary, const std::string& sDefaultValue) {
 	char acBuffer[BUFFER_SIZE];
 	if (true == sArgName.empty()) {
 		snprintf(acBuffer, BUFFER_SIZE, "%s: The parameter `sArgName` cannot be an empty string!", __PRETTY_FUNCTION__);
@@ -54,7 +54,7 @@ void myArgsParser::addPositionArgument(const std::string& sArgName, const std::s
 	this->m_vpoPositionArguments.push_back(poPositionArgument);
 } // End of myArgsParser::addPositionArgument
 
-void myArgsParser::addOptionArgument(const std::string& sArgName, const std::string& sDescription, const std::string& sLongArg, char cShortArg, bool isNeedValue, const std::string& sDefaultValue){
+void myArgsParser::addOptionArgument(const std::string& sArgName, const std::string& sDescription, const std::string& sLongArg, char cShortArg, bool isNeedValue, const std::string& sDefaultValue) {
 	char acBuffer[BUFFER_SIZE];
 
 	if (true == sArgName.empty()) {
@@ -118,7 +118,7 @@ void myArgsParser::addOptionArgument(const std::string& sArgName, const std::str
 	this->m_vpoOptionArguments.push_back(poOptionArgument);
 } // End of myArgsParser::addOptionArgument
 
-void myArgsParser::parseArgs(int argc, char** argv){
+void myArgsParser::parseArgs(int argc, char** argv) {
 	this->m_oParsedArgs.clear();
 
 	list<int> oOptionArgsIndexList;
@@ -133,7 +133,7 @@ void myArgsParser::parseArgs(int argc, char** argv){
 		this->m_oParsedArgs.insert(pair<string, string>(this->m_vpoPositionArguments[i]->sArgName, this->m_vpoPositionArguments[i]->sParsedValue));
 	} // End of for-loop
 
-	enum ArgType_e{
+	enum ArgType_e {
 		kPositionArg,
 		kLongOptionArg,
 		kShortOptionArg,
@@ -154,31 +154,30 @@ void myArgsParser::parseArgs(int argc, char** argv){
 		} // End of for-loop
 
 		switch (iCountOfHyphenSymbol) {
-			case 1:
-				kArgType = ArgType_e::kShortOptionArg;
-				break;
-			case 2:
-				kArgType = ArgType_e::kLongOptionArg;
-				break;
-			default:
-				break;
+		case 1:
+			kArgType = ArgType_e::kShortOptionArg;
+			break;
+		case 2:
+			kArgType = ArgType_e::kLongOptionArg;
+			break;
+		default:
+			break;
 		} // End of switch
 
 		switch (kArgType) {
-			case ArgType_e::kPositionArg:
-				{
-					int index = oPosistionArgsIndexList.front();
-					string sArgName = this->m_vpoPositionArguments[index]->sArgName;
-					auto poIter = this->m_oParsedArgs.find(sArgName);
-					if (poIter != this->m_oParsedArgs.end()) {
-						poIter->second = argv[i];
-					} // End of if-condition
+		case ArgType_e::kPositionArg: {
+			int index = oPosistionArgsIndexList.front();
+			string sArgName = this->m_vpoPositionArguments[index]->sArgName;
+			auto poIter = this->m_oParsedArgs.find(sArgName);
+			if (poIter != this->m_oParsedArgs.end()) {
+				poIter->second = argv[i];
+			} // End of if-condition
 
-					oPosistionArgsIndexList.pop_front();
-					break;
-				}
-			default:
-				break;
+			oPosistionArgsIndexList.pop_front();
+			break;
+		}
+		default:
+			break;
 		} // End of switch
 
 		i++;
@@ -193,4 +192,3 @@ void myArgsParser::parseArgs(int argc, char** argv){
 		} // End of if-condition
 	} // End of for-loop
 } // End of myArgsParser::parseArgs
-
