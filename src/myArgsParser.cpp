@@ -15,6 +15,7 @@
 
 using namespace std;
 using namespace ArgsParserCpp;
+using namespace ArgsParserCpp::DataStructures;
 
 myArgsParser::myArgsParser() {
 	this->m_vpoOptionArguments.clear();
