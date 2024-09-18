@@ -1,14 +1,14 @@
+#include "ArgsParserCpp/myArgsParser.h"
 #include "gtest/gtest.h"
 #include <cstdio>
 #include <gtest/gtest.h>
 #include <memory>
 #include <stdexcept>
-#include "ArgsParserCpp/myArgsParser.h"
 
 using namespace std;
 using namespace ArgsParserCpp;
 
-TEST(myArgsParserTest, AddPositionArgumentFail){
+TEST(myArgsParserTest, AddPositionArgumentFail) {
 	unique_ptr<myArgsParser> poPaser(new myArgsParser());
 
 	EXPECT_THROW(poPaser->addPositionArgument("", ""), invalid_argument);
@@ -52,7 +52,7 @@ TEST(myArgsParserTest, AddPositionArgumentFail){
 	EXPECT_EQ(poPaser->m_vpoPositionArguments[2]->sParsedValue, "test.txt");
 } // End of myArgsParserTest::AddPositionArgumentFail
 
-TEST(myArgsParserTest, AddPositionArgumentSucceed){
+TEST(myArgsParserTest, AddPositionArgumentSucceed) {
 	unique_ptr<myArgsParser> poPaser(new myArgsParser());
 
 	EXPECT_THROW(poPaser->addPositionArgument("", ""), invalid_argument);
@@ -96,7 +96,7 @@ TEST(myArgsParserTest, AddPositionArgumentSucceed){
 	EXPECT_EQ(poPaser->m_vpoPositionArguments[2]->sParsedValue, "test.txt");
 } // End of myArgsParserTest::AddPositionArgumentSucceed
 
-TEST(myArgsParserTest, AddOptionArgumentFailed){
+TEST(myArgsParserTest, AddOptionArgumentFailed) {
 	shared_ptr<myArgsParser> poPaser(new myArgsParser());
 
 	EXPECT_THROW(poPaser->addOptionArgument("", "", "", '\0'), invalid_argument);
@@ -116,7 +116,7 @@ TEST(myArgsParserTest, AddOptionArgumentFailed){
 	EXPECT_THROW(poPaser->addOptionArgument("invalid_short_arg", "", "", 27), invalid_argument);
 } // End of myArgsParserTest::AddOptionArgumentFailed
 
-TEST(myArgsParserTest, AddOptionArgumentSucceed){
+TEST(myArgsParserTest, AddOptionArgumentSucceed) {
 	shared_ptr<myArgsParser> poPaser(new myArgsParser());
 
 	EXPECT_NO_THROW(poPaser->addOptionArgument("option1", "The firt option argugment.", "option1", '\0'));
@@ -180,7 +180,7 @@ TEST(myArgsParserTest, AddOptionArgumentSucceed){
 	EXPECT_EQ(poPaser->m_vpoOptionArguments[3]->sParsedValue, "");
 } // End of myArgsParserTest::AddOptionArgumentSucceed
 
-int main(int argc, char** argv){
+int main(int argc, char** argv) {
 	::testing::InitGoogleTest(&argc, argv);
 
 	return RUN_ALL_TESTS();
